@@ -49,7 +49,7 @@ Steps:
             export DPDK_DIR=/usr/src/dpdk-stable-16.11.1
             cd $DPDK_DIR
             
-            export DPDK_TARGET=x87_64-native-linuxapp-gcc
+            export DPDK_TARGET=x86_64-native-linuxapp-gcc
             export DPDK_BUILD=$DPDK_DIR/$DPDK_TARGET
             make install T=$DPDK_TARGET DESTDIR=install
 
@@ -150,3 +150,23 @@ Docker startup:
 
 Ref: 
 1) http://dpdk.org/doc/guides/howto/virtio_user_for_container_networking.html
+
+===================================================
+Problem 1): 
+# Install and bind UIO interface 
+            modprobe uio
+            insmod $DPDK_BUILD/kmod/igb_uio.ko
+    if there is error:
+            insmod: ERROR: could not insert module ../dpdk-2.0.0/x86_64-ivshmem-linuxapp-gcc/kmod/igb_uio.ko: Invalid module format 
+
+    Reason:     
+        the UIO modinfo is not the same with kernal version
+    Solution: 
+        rebuild the DPDK by following:
+
+            export DPDK_DIR=/usr/src/dpdk-stable-16.11.1
+            cd $DPDK_DIR
+            export DPDK_TARGET=x86_64-native-linuxapp-gcc
+            export DPDK_BUILD=$DPDK_DIR/$DPDK_TARGET
+            make install T=$DPDK_TARGET DESTDIR=install
+
