@@ -114,7 +114,7 @@ Steps:
 
             ovs-vsctl add-port br0 vhost-user-1 -- set Interface vhost-user-1 type=dpdkvhostuser  
 
-            ovs-vsctl add-port br0 vhost-user-2 -- set Interface vhost-user-1 type=dpdkvhostuser  
+            ovs-vsctl add-port br0 vhost-user-2 -- set Interface vhost-user-2 type=dpdkvhostuser  
 
     c, htop to check the cpu-bind
 
@@ -150,6 +150,14 @@ Docker startup:
 
 Ref: 
 1) http://dpdk.org/doc/guides/howto/virtio_user_for_container_networking.html
+
+
+===================================================
+If reuse this VM:
+
+clean the ovs:
+        rm /usr/local/etc/openvswitch/conf.db
+        rm /usr/local/var/run/openvswitch/*
 
 ===================================================
 Problem 1): 

@@ -1,0 +1,19 @@
+Ref:
+1): http://docs.openvswitch.org/en/latest/howto/dpdk/
+
+============================================
+pmd thread stat:
+        ovs-appctl dpif-netdev/pmd-stats-show
+clear previous stats:
+        ovs-appctl dpif-netdev/pmd-stats-clear
+show port/rxq assignment: 
+        ovs-appctl dpif-netdev/pmd-rxq-show
+
+
+
+============================================
+To config the Qos policy on OVS-DPDK
+
+ovs-vsctl set port vhost-user-1 qos=@newqos -- \
+    --id=@newqos create qos type=egress-policer other-config:cir=46000000 \
+        other-config:cbs=2048`
