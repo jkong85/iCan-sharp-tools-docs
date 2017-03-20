@@ -4,12 +4,32 @@ Ref:
 ============================================
 pmd thread stat:
         ovs-appctl dpif-netdev/pmd-stats-show
+
 clear previous stats:
         ovs-appctl dpif-netdev/pmd-stats-clear
+
 show port/rxq assignment: 
         ovs-appctl dpif-netdev/pmd-rxq-show
 
+===========================================
 
+ovs-appctl fdb/show br0
+
+// show port statiscis
+    ovs-ofctl dump-ports br0
+
+// show ports
+    ovs-ofctl show br0
+
+    ovs-vsctl list-ports br0
+    
+    ovs-vsctl list interface dpdkport0
+    
+    ovs-ofctl dump-flows br0
+    
+    ovs-ofctl del-flows br0
+    
+    ovs-appctl dpif/dump-flows br0
 
 ============================================
 To config the Qos policy on OVS-DPDK
