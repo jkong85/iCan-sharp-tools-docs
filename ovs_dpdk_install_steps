@@ -152,6 +152,16 @@ Docker startup:
                 --vdev=virtio_user0,path=/var/run/usvhost \
                 -- -i --txqflags=0xf00 --disable-hw-vlan
 
+            // or run with the specif mac address
+            docker run -i -t -v /usr/local/var/run/openvswitch/vhost-user-1:/var/run/usvhost \
+                -v /dev/hugepages:/dev/hugepages \
+                dpdk-app-testpmd testpmd -l 6-7 -n 4 -m 1024 --no-pci \
+                --vdev=virtio_user0,path=/var/run/usvhost \
+                -- -i --txqflags=0xf00 --disable-hw-vlan \
+                --eth-peer=0,d2:d8:c7:39:3a:83
+
+
+
             docker run -i -t -v /usr/local/var/run/openvswitch/vhost-user-2:/var/run/usvhost \
                 -v /dev/hugepages:/dev/hugepages \
                 dpdk-app-testpmd testpmd -l 3-4 -n 4 -m 1024 --no-pci \
