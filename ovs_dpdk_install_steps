@@ -60,9 +60,11 @@ Steps:
 
     b, bind network device to igb_uio: 
             $DPDK_DIR/tools/dpdk-devbind.py --status
+
             ifconfig ens8 down
-            ifconfig ens9 down
             $DPDK_DIR/tools/dpdk-devbind.py --bind=igb_uio 0000:00:08.0
+
+            ifconfig ens9 down
             $DPDK_DIR/tools/dpdk-devbind.py --bind=igb_uio 0000:00:09.0
 
 5, setup OVS:
@@ -70,7 +72,7 @@ Steps:
             cd ~/Download
             wget http://openvswitch.org/releases/openvswitch-2.7.0.tar.gz
             tar -xf openvswitch-2.7.0.tar.gz
-            cd openvswitch-2.7.0/
+            cd ~/Download/openvswitch-2.7.0/
             ./boot.sh
             ./configure --with-dpdk=$DPDK_BUILD
             make
