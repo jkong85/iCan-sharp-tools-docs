@@ -26,20 +26,27 @@ Steps:
         </cpu>
     d, start KVM by *.xml
         virsh create dpdk_ovs_install.xml
+    e, check the cpu support pdpe1gb
+        lscpu | grep pdpe1gb 
+
 2. 1Gb hugepage support and VFIO support
     a, In /etc/default/grub, add:  (make sure it's 1G bit or the total mem is less the VM's total memory??? Need to check later)
-
             GRUB_CMDLINE_LINUX="default_hugepagesz=1G hugepagesz=1G hugepages=12 hugepagesz=2M hugepages=2048 iommu=pt intel_iommu=on isolcpus=1-4,6-8"
-
     b, then:
             grub-mkconfig -o /boot/grub/grub.cfg
-
     c, shutdown VM 
-
     d, start the VM by xml (guarantee the 1GB hugepage)
             virsh create dpdk_ovs_install.xml
 
-    e, check:
+
+    Another way is to allocate the hugepage in runtime:
+    a, sudo touch /etc/sysctl.d/hugepages.conf
+    a, echo 'vm.nr_hugepages=1048576' | sudo tee --append /etc/sysctl.d/hugepages.conf
+    b, sudo sysctl -w vm.nr_hugepages=10
+    c, sudo mkdir -p /dev/hugepages
+    d, sudo mount -t hugetlbfs none /dev/hugepages``
+
+    Then we can check the configuration by the following cmd:
             dmesg | grep -e DMAR -e IOMMU
             cat /proc/cmdline | grep iommu=pt
             cat /proc/cmdline | grep intel_iommu=on
